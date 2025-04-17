@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: restro-eureka-discovery-service
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false # Telling the server not to register himself in the service registry
+    fetch-registry: false
