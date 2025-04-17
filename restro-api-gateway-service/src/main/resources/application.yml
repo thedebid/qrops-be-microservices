@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: restro-api-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: restro-user-service
+          uri: lb://restro-user-service
+          predicates:
+            - Path=/api/v1/auth/**
+
+server:
+  port: 8765
