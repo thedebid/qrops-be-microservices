@@ -21,7 +21,7 @@
 
     <modules>
         <module>restro-commons</module>
-        <module>restro-user-service</module>
+        <module>restro-auth-service</module>
         <module>restro-eureka-discovery-service</module>
         <module>restro-api-gateway-service</module>
     </modules>

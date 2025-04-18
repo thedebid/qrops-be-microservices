@@ -4,10 +4,17 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: restro-user-service
-          uri: lb://restro-user-service
+        - id: restro-auth-service
+          uri: lb://restro-auth-service
           predicates:
             - Path=/api/v1/auth/**
+          filters:
+            - AuthFilter
 
 server:
   port: 8765
+
+restro:
+  jwt:
+    # JWT secret key
+    secret-key: "3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b"
