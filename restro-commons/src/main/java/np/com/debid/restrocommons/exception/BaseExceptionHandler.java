@@ -8,15 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
-public class CustomExceptionsHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomExceptionsHandler.class);
+public class BaseExceptionHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseExceptionHandler.class);
     int httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
     String apiPath = null;
     String httpMethod = null;
@@ -37,21 +36,16 @@ public class CustomExceptionsHandler {
         return ResponseUtil.errorResponse(httpStatusCode, exception.getMessage(), null, apiPath, httpMethod);
     }
 
-    @ExceptionHandler(value = {InsufficientAuthenticationException.class})
-    public ResponseEntity<ResponseWrapper<ResponseUtil>> handleInsufficientAuthenticationException(Exception exception, WebRequest request) {
+
+    @ExceptionHandler(value = {ExpiredJwtException.class})
+    public ResponseEntity<ResponseWrapper<ResponseUtil>> handleExpiredJwtException(ExpiredJwtException exception, WebRequest request) {
         httpStatusCode = HttpStatus.UNAUTHORIZED.value();
         apiPath = ((ServletWebRequest) request).getRequest().getRequestURI();
         httpMethod = ((ServletWebRequest) request).getRequest().getMethod();
         return ResponseUtil.errorResponse(httpStatusCode, exception.getMessage(), null, apiPath, httpMethod);
     }
 
-    @ExceptionHandler(value = {ExpiredJwtException.class})
-    public ResponseEntity<ResponseWrapper<ResponseUtil>> handleExpiredJwtException(Exception exception, WebRequest request) {
-        httpStatusCode = HttpStatus.UNAUTHORIZED.value();
-        apiPath = ((ServletWebRequest) request).getRequest().getRequestURI();
-        httpMethod = ((ServletWebRequest) request).getRequest().getMethod();
-        return ResponseUtil.errorResponse(httpStatusCode, exception.getMessage(), null, apiPath, httpMethod);
-    }
+
 
 //
 ////    @ExceptionHandler(value = {DataIntegrityViolationException.class})
