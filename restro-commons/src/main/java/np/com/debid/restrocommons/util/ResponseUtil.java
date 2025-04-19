@@ -21,7 +21,9 @@ public class ResponseUtil {
     public static <T> ResponseEntity<ResponseWrapper<T>> errorResponse(int statusCode, String message, T data, int errorCode, String apiPath, String httpMethod) {
         return new ResponseEntity<>(new ResponseWrapper<>(statusCode, message, data, errorCode, apiPath, httpMethod), HttpStatusCode.valueOf(statusCode));
     }
+
     public static <T> ResponseEntity<ResponseWrapper<T>> errorResponse(int statusCode, String message, T data, String apiPath, String httpMethod) {
         return new ResponseEntity<>(new ResponseWrapper<>(statusCode, message, data, apiPath, httpMethod), HttpStatusCode.valueOf(statusCode));
     }
+
 }

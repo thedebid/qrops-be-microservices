@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class ResponseWrapper<T> {
@@ -13,6 +14,9 @@ public class ResponseWrapper<T> {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T messages;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
@@ -70,6 +74,7 @@ public class ResponseWrapper<T> {
         this.httpMethod = httpMethod;
         this.timestamp = LocalDateTime.now();
     }
+
     public ResponseWrapper(int statusCode, String message, T data, String apiPath, String httpMethod) {
         this.statusCode = statusCode;
         this.message = message;

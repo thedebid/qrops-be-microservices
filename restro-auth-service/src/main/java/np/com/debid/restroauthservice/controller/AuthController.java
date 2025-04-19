@@ -10,7 +10,6 @@ import np.com.debid.restrocommons.util.ResponseUtil;
 import np.com.debid.restrocommons.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +20,6 @@ import static np.com.debid.restroauthservice.constant.Constant.Messages.LOGIN_SU
 import static np.com.debid.restroauthservice.constant.Constant.Messages.USER_CREATED;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
