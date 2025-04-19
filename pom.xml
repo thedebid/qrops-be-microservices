@@ -12,7 +12,9 @@
     <artifactId>restro-backend-microservices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>restro-backend-microservices</name>
-    <description>A microservice-based restaurant management system with support for products, orders, payments, reservations, and a QR-based digital menu.</description>
+    <description>A microservice-based restaurant management system with support for products, orders, payments,
+        reservations, and a QR-based digital menu.
+    </description>
 
     <properties>
         <java.version>17</java.version>
@@ -24,6 +26,7 @@
         <module>restro-auth-service</module>
         <module>restro-eureka-discovery-service</module>
         <module>restro-api-gateway-service</module>
+        <module>restro-category-service</module>
     </modules>
 
     <packaging>pom</packaging>
