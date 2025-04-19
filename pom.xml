@@ -28,6 +28,7 @@
         <module>restro-api-gateway-service</module>
         <module>restro-restaurant-service</module>
         <module>restro-category-service</module>
+        <module>restro-product-service</module>
     </modules>
 
     <packaging>pom</packaging>

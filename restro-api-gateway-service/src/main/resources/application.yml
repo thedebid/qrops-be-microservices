@@ -24,6 +24,13 @@ spring:
             - Path=/api/v1/category/**
           filters:
             - AuthFilter
+
+        - id: restro-product-service
+          uri: lb://restro-product-service
+          predicates:
+            - Path=/api/v1/product/**
+          filters:
+            - AuthFilter
 server:
   port: 8765
 
