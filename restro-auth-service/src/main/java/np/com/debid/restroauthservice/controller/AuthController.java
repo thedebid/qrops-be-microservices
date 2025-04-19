@@ -10,7 +10,6 @@ import np.com.debid.restrocommons.util.ResponseUtil;
 import np.com.debid.restrocommons.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +34,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseUtil.successResponse(USER_CREATED, userService.create(request));
-    }
-
-    @GetMapping("/status")
-    public ResponseEntity<ResponseWrapper<String>> getAuth() {
-        return ResponseUtil.successResponse("Auth Service is up and running");
+        return ResponseUtil.successResponse(USER_CREATED);
     }
 
 }
