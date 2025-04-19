@@ -26,6 +26,7 @@
         <module>restro-auth-service</module>
         <module>restro-eureka-discovery-service</module>
         <module>restro-api-gateway-service</module>
+        <module>restro-restaurant-service</module>
         <module>restro-category-service</module>
     </modules>
 

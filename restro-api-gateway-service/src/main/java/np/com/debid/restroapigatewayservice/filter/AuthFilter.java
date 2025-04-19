@@ -7,6 +7,7 @@ import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +27,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            ServerHttpRequest request = exchange.getRequest();
             if (routeValidator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new GatewayCustomException("Authorization header is missing. Please include a valid Authorization header to access this resource", 401);
@@ -35,8 +37,11 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                     authHeader = authHeader.substring(7);
                 }
                 jwtUtil.validateJwtToken(authHeader);
+                request = exchange.getRequest().mutate()
+                        .header("userId", String.valueOf(jwtUtil.extractUserId(authHeader)))
+                        .build();
             }
-            return chain.filter(exchange);
+            return chain.filter(exchange.mutate().request(request).build());
         };
     }
 
