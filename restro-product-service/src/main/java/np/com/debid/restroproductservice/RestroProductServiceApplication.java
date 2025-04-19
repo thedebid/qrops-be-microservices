@@ -1,4 +1,4 @@
-package np.com.debid.restroauthservice;
+package np.com.debid.restroproductservice;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -11,17 +11,15 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(basePackages = {
-        "np.com.debid.restrocommons", "np.com.debid.restroauthservice"
-})
-public class RestroAuthServiceApplication {
+@ComponentScan(basePackages = {"np.com.debid.restrocommons", "np.com.debid.restroproductservice"})
+public class RestroProductServiceApplication {
     @Bean
     ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(RestroAuthServiceApplication.class, args);
+        SpringApplication.run(RestroProductServiceApplication.class, args);
     }
 
 }

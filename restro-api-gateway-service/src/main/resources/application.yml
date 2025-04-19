@@ -11,6 +11,26 @@ spring:
           filters:
             - AuthFilter
 
+        - id: restro-restaurant-service
+          uri: lb://restro-restaurant-service
+          predicates:
+            - Path=/api/v1/restaurant/**
+          filters:
+            - AuthFilter
+
+        - id: restro-category-service
+          uri: lb://restro-category-service
+          predicates:
+            - Path=/api/v1/category/**
+          filters:
+            - AuthFilter
+
+        - id: restro-product-service
+          uri: lb://restro-product-service
+          predicates:
+            - Path=/api/v1/product/**
+          filters:
+            - AuthFilter
 server:
   port: 8765
 
