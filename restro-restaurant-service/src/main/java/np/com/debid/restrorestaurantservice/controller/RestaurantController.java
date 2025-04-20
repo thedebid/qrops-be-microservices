@@ -1,8 +1,10 @@
 package np.com.debid.restrorestaurantservice.controller;
 
+import jakarta.validation.Valid;
 import np.com.debid.restrocommons.util.ResponseUtil;
 import np.com.debid.restrocommons.util.ResponseWrapper;
 import np.com.debid.restrorestaurantservice.dto.RestaurantDTO;
+import np.com.debid.restrorestaurantservice.dto.ValidateDTO;
 import np.com.debid.restrorestaurantservice.entity.Restaurant;
 import np.com.debid.restrorestaurantservice.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,11 @@ public class RestaurantController {
     public ResponseEntity<List<Restaurant>> getMyRestaurants(@PathVariable("userid") Long userId) {
         List<Restaurant> restaurants = restaurantService.getRestaurantsByOwner(userId);
         return ResponseEntity.ok(restaurants);
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<Boolean> validateRestaurant(@Valid @RequestBody ValidateDTO validateDTO) {
+        Boolean isValid = restaurantService.validateRestaurant(validateDTO.getTenantId(), validateDTO.getUserId());
+        return ResponseEntity.ok(isValid);
     }
 }

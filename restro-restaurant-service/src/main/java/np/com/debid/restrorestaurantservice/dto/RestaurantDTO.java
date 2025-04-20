@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class RestaurantDTO {
-    private Long id;
+    private UUID id;
 
     @NotBlank(message = "Name is required")
     @Size(max = 100, message = "Name must be less than 100 characters")

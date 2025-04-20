@@ -2,6 +2,7 @@ package np.com.debid.restrocategoryservice.service;
 
 import np.com.debid.restrocategoryservice.dto.CategoryRequest;
 import np.com.debid.restrocategoryservice.dto.CategoryResponse;
+import np.com.debid.restrocategoryservice.dto.ValidateDTO;
 import np.com.debid.restrocategoryservice.entity.Category;
 import np.com.debid.restrocategoryservice.repository.CategoryRepository;
 import np.com.debid.restrocommons.exception.CustomException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static np.com.debid.restrocategoryservice.constant.Constant.ErrorCodes.CATEGORY_NOT_FOUND_ERROR_CODE;
 import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATEGORY_NOT_FOUND;
@@ -20,12 +22,14 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    private RestaurantClient restaurantClient;
 
-    public Category createCategory(CategoryRequest categoryRequest) {
+    public Category createCategory(CategoryRequest categoryRequest, UUID tenantId) {
         Category category = new Category();
         category.setName(categoryRequest.getName());
         category.setDescription(categoryRequest.getDescription());
-        category.setRestaurantId(categoryRequest.getRestaurantId());
+        category.setRestaurantId(tenantId);
 
         return categoryRepository.save(category);
     }
@@ -44,8 +48,8 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new CustomException(CATEGORY_NOT_FOUND, 404, CATEGORY_NOT_FOUND_ERROR_CODE));
     }
 
-    public List<CategoryResponse> getAllCategoriesByRestaurant() {
-        List<Category> categories = categoryRepository.findAll();
+    public List<CategoryResponse> getAllCategoriesByRestaurant(UUID tenantId) {
+        List<Category> categories = categoryRepository.findByRestaurantId(tenantId);
         return categories.stream()
                 .map(category -> modelMapper.map(category, CategoryResponse.class))
                 .map(category -> new CategoryResponse(category.getId(), category.getName(), category.getDescription(), category.getRestaurantId()))
@@ -55,5 +59,12 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         Category category = getCategory(id);
         categoryRepository.deleteById(category.getId());
+    }
+
+    public Boolean validateRestaurantWithUser(Long userId, UUID tenantId) {
+        ValidateDTO validateDTO = new ValidateDTO();
+        validateDTO.setTenantId(tenantId);
+        validateDTO.setUserId(userId);
+        return this.restaurantClient.validateRestaurant(validateDTO);
     }
 }

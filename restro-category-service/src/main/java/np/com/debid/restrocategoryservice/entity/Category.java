@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "categories")
@@ -25,7 +26,7 @@ public class Category {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "restaurant_id")
-    private Long restaurantId;
+    private UUID restaurantId;
 
     public Category() {
         this.createdAt = LocalDateTime.now();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RestaurantService {
@@ -36,5 +37,9 @@ public class RestaurantService {
 
     public List<Restaurant> getRestaurantsByOwner(Long owner) {
         return restaurantRepository.findByUserId(owner);
+    }
+
+    public Boolean validateRestaurant(UUID tenantId, Long userId) {
+        return restaurantRepository.existsByIdAndUserId(tenantId, userId);
     }
 }
