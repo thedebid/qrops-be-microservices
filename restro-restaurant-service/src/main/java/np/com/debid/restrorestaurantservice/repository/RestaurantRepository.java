@@ -11,4 +11,6 @@ import java.util.UUID;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, UUID> {
     List<Restaurant> findByUserId(Long ownerId);
+
+    Boolean existsByIdAndUserId(UUID id, Long userId);
 }
