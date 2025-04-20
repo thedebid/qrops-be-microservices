@@ -22,7 +22,7 @@ import java.util.UUID;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -42,9 +42,6 @@ public class Restaurant {
 
     @JoinColumn(name = "user_id", nullable = false)
     private Long userId;  // Restaurant belongs to a User
-
-    @Column(name = "tenant_id")
-    private UUID tenantId; // Store tenant ID for tenant isolation
 
     public Restaurant() {
 
