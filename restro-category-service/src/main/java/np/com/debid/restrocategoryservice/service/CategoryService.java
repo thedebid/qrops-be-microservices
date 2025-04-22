@@ -15,6 +15,8 @@ import java.util.UUID;
 
 import static np.com.debid.restrocategoryservice.constant.Constant.ErrorCodes.CATEGORY_NOT_FOUND_ERROR_CODE;
 import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATEGORY_NOT_FOUND;
+import static np.com.debid.restrocommons.constant.Constant.ErrorCodes.UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA_ERROR_CODE;
+import static np.com.debid.restrocommons.constant.Constant.Messages.UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA;
 
 @Service
 public class CategoryService {
@@ -61,10 +63,13 @@ public class CategoryService {
         categoryRepository.deleteById(category.getId());
     }
 
-    public Boolean validateRestaurantWithUser(Long userId, UUID tenantId) {
+    public void validateRestaurantWithUser(Long userId, UUID tenantId) {
         ValidateDTO validateDTO = new ValidateDTO();
         validateDTO.setTenantId(tenantId);
         validateDTO.setUserId(userId);
-        return this.restaurantClient.validateRestaurant(validateDTO);
+        if (!this.restaurantClient.validateRestaurant(validateDTO)) {
+            // Restaurant ID and User ID mismatch
+            throw new CustomException(UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA, 404, UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA_ERROR_CODE);
+        }
     }
 }

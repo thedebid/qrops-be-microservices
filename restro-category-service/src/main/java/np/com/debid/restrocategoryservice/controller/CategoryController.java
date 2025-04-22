@@ -5,7 +5,6 @@ import np.com.debid.restrocategoryservice.dto.CategoryRequest;
 import np.com.debid.restrocategoryservice.dto.CategoryResponse;
 import np.com.debid.restrocategoryservice.entity.Category;
 import np.com.debid.restrocategoryservice.service.CategoryService;
-import np.com.debid.restrocommons.exception.CustomException;
 import np.com.debid.restrocommons.util.ResponseUtil;
 import np.com.debid.restrocommons.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATE
 import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATEGORY_CREATED;
 import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATEGORY_DELETED;
 import static np.com.debid.restrocategoryservice.constant.Constant.Messages.CATEGORY_FETCHED;
-import static np.com.debid.restrocommons.constant.Constant.ErrorCodes.UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA_ERROR_CODE;
-import static np.com.debid.restrocommons.constant.Constant.Messages.UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA;
 
 @RestController
 @RequestMapping("/api/v1/category")
@@ -38,10 +35,7 @@ public class CategoryController {
     @PostMapping("/create")
     public ResponseEntity<ResponseWrapper<Category>> createCategory(@Valid @RequestBody CategoryRequest categoryRequest, @RequestHeader("userId") Long userId, @RequestHeader("X-TenantID") String tenantId) {
         UUID tenantUUID = UUID.fromString(tenantId);
-        if (!categoryService.validateRestaurantWithUser(userId, tenantUUID)) {
-            // Restaurant ID and User ID mismatch
-            throw new CustomException(UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA, 404, UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA_ERROR_CODE);
-        }
+        this.categoryService.validateRestaurantWithUser(userId, tenantUUID);
         return ResponseUtil.successResponse(CATEGORY_CREATED, categoryService.createCategory(categoryRequest, tenantUUID));
     }
 
@@ -60,11 +54,7 @@ public class CategoryController {
     @GetMapping("/get/restaurant")
     public ResponseEntity<ResponseWrapper<List<CategoryResponse>>> getAllCategoriesByRestaurant(@RequestHeader("userId") Long userId, @RequestHeader("X-TenantID") String tenantId) {
         UUID tenantUUID = UUID.fromString(tenantId);
-
-        if (!categoryService.validateRestaurantWithUser(userId, tenantUUID)) {
-            // Restaurant ID and User ID mismatch
-            throw new CustomException(UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA, 404, UNAUTHORIZED_ACCESS_IN_RESTAURANT_DATA_ERROR_CODE);
-        }
+        this.categoryService.validateRestaurantWithUser(userId, tenantUUID);
         return ResponseUtil.successResponse(CATEGORIES_FETCHED, categoryService.getAllCategoriesByRestaurant(tenantUUID));
     }
 }
