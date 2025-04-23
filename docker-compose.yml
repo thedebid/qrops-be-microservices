@@ -6,9 +6,9 @@ services:
     hostname: restro-postgres-db
     restart: always
     environment:
-      POSTGRES_DB: restro
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: sa
+      POSTGRES_DB: "restro"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "sa"
     ports:
       - "5432:5432"
     volumes:
@@ -17,6 +17,7 @@ services:
       - restro-app-network
 
   eureka-discovery-service:
+    image: restro-eureka-discovery-service:latest
     container_name: eureka-service
     build:
       context: ./restro-eureka-discovery-service
@@ -26,12 +27,13 @@ services:
     ports:
       - "8761:8761"
     environment:
-      EUREKA_CLIENT_REGISTER_WITH_EUREKA: false
-      EUREKA_CLIENT_FETCH_REGISTRY: false
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
     networks:
       - restro-app-network
 
   auth-service:
+    image: restro-auth-service:latest
     container_name: auth-service
     build:
       context: ./restro-auth-service
@@ -44,14 +46,15 @@ services:
       - restro-postgres-db
       - eureka-discovery-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://restro-postgres-db:5432/restro
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: sa
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-discovery-service:8761/eureka/
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://restro-postgres-db:5432/restro"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "sa"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-discovery-service:8761/eureka/"
     networks:
       - restro-app-network
 
   api-gateway-service:
+    image: restro-api-gateway-service:latest
     container_name: api-gateway-service
     build:
       context: ./restro-api-gateway-service
@@ -63,7 +66,7 @@ services:
     depends_on:
       - eureka-discovery-service
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-discovery-service:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-discovery-service:8761/eureka/"
     networks:
       - restro-app-network
 
