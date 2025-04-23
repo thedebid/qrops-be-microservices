@@ -17,6 +17,7 @@ services:
       - restro-app-network
 
   eureka-discovery-service:
+    image: restro-eureka-discovery-service:latest
     container_name: eureka-service
     build:
       context: ./restro-eureka-discovery-service
@@ -32,6 +33,7 @@ services:
       - restro-app-network
 
   auth-service:
+    image: restro-auth-service:latest
     container_name: auth-service
     build:
       context: ./restro-auth-service
@@ -52,6 +54,7 @@ services:
       - restro-app-network
 
   api-gateway-service:
+    image: restro-api-gateway-service:latest
     container_name: api-gateway-service
     build:
       context: ./restro-api-gateway-service
