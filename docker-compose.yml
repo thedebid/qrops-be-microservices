@@ -49,7 +49,8 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://restro-postgres-db:5432/restro"
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "sa"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-discovery-service:8761/eureka/"
+      # Please look at this GitHub Issue for spring-cloud-netflix for more details. https://github.com/spring-cloud/spring-cloud-netflix/issues/2541
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka-discovery-service:8761/eureka"}}}}'
     networks:
       - restro-app-network
 
@@ -66,7 +67,7 @@ services:
     depends_on:
       - eureka-discovery-service
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-discovery-service:8761/eureka/"
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka-discovery-service:8761/eureka"}}}}'
     networks:
       - restro-app-network
 
