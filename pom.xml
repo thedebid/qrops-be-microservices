@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>np.com.debid</groupId>
-    <artifactId>restro-backend-microservices</artifactId>
+    <artifactId>qrops-backend-microservices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>restro-backend-microservices</name>
     <description>A microservice-based restaurant management system with support for products, orders, payments,
