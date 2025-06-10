@@ -10,8 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-@ComponentScan(basePackages = {"np.com.debid.restrocommons", "np.com.debid.restroproductservice"})
+@EnableFeignClients(basePackages = {"np.com.debid.restrocommons.service"})
+@ComponentScan(basePackages = {"np.com.debid.restrocommons", "np.com.debid.qropsproductservice"})
 public class QROpsProductServiceApplication {
     @Bean
     ModelMapper modelMapper() {
