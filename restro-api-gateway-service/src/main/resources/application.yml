@@ -25,8 +25,8 @@ spring:
           filters:
             - AuthFilter
 
-        - id: restro-product-service
-          uri: lb://restro-product-service
+        - id: qrops-product-service
+          uri: lb://qrops-product-service
           predicates:
             - Path=/api/v1/product/**
           filters:
