@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class CategoryRequest {
@@ -12,5 +14,5 @@ public class CategoryRequest {
     private String name;
     private String description;
     @NotNull(message = "Restaurant ID is required.")
-    private Long restaurantId;
+    private UUID restaurantId;
 }

@@ -1,4 +1,4 @@
-package np.com.debid.qropsproductservice;
+package np.com.debid.qropsorderservice;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -11,15 +11,15 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"np.com.debid.restrocommons.service"})
-@ComponentScan(basePackages = {"np.com.debid.restrocommons", "np.com.debid.qropsproductservice"})
-public class QROpsProductServiceApplication {
+@ComponentScan(basePackages = {"np.com.debid.restrocommons", "np.com.debid.qropsorderservice"})
+public class QRopsOrderServiceApplication {
     @Bean
     ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(QROpsProductServiceApplication.class, args);
+        SpringApplication.run(QRopsOrderServiceApplication.class, args);
     }
 
 }

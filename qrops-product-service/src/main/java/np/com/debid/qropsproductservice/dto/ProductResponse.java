@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,6 +17,6 @@ public class ProductResponse {
     private String description;
     private double price;
     private long categoryId;
-    private Long restaurantId;
+    private UUID restaurantId;
     private Boolean available;
 }
